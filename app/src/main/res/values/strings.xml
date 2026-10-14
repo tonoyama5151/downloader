@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ダウンローダー</string>
+    <string name="downloads_title">ダウンロード一覧</string>
+    <string name="url_hint">URLまたは検索ワード</string>
+    <string name="menu">メニュー</string>
+    <string name="downloads_empty">ダウンロードはまだありません</string>
+    <string name="delete">削除</string>
+</resources>

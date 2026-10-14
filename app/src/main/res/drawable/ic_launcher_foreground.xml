@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 再生マークの入った画面と、下向き矢印 -->
+    <path
+        android:fillColor="@color/icon_foreground"
+        android:pathData="M30,32h48a4,4 0,0 1,4 4v26a4,4 0,0 1,-4 4H30a4,4 0,0 1,-4 -4V36a4,4 0,0 1,4 -4zM31,37v24h46V37z" />
+    <path
+        android:fillColor="@color/icon_foreground"
+        android:pathData="M49,42l12,7 -12,7z" />
+    <path
+        android:fillColor="@color/icon_foreground"
+        android:pathData="M51,68h6v6h7l-10,10 -10,-10h7z" />
+</vector>
