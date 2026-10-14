@@ -10,11 +10,11 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -36,7 +36,16 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-        run: ./gradlew --no-daemon testDebugUnitTest assembleRelease
+        run: |
+          set -o pipefail
+          if ! ./gradlew --no-daemon testDebugUnitTest assembleRelease 2>&1 | tee build.log; then
+            # 失敗の原因を GitHub 上の注釈として表示する
+            grep -E "^e: |error:|ERROR:|FAILED|AAPT|Unresolved|expected:<" build.log | sort -u | head -9 | while IFS= read -r line; do
+              echo "::error::${line:0:900}"
+            done
+            sed -n '/What went wrong/,/Try:/p' build.log | head -25 | awk 'BEGIN{ORS="%0A"} {print}' | sed 's/^/::error title=Gradle::/' ; echo
+            exit 1
+          fi
 
       - name: APKの名前を整える
         run: |
