@@ -10,7 +10,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
 
 /** ダウンロード中にアプリがバックグラウンドへ回っても止まらないようにするサービス */
@@ -33,7 +32,7 @@ class DownloadService : Service() {
         if (!observing) {
             observing = true
             scope.launch {
-                DownloadRepository.tasks.conflate().collect { tasks ->
+                DownloadRepository.tasks.collect { tasks ->
                     if (tasks.none { it.isActive }) {
                         ServiceCompat.stopForeground(this@DownloadService, ServiceCompat.STOP_FOREGROUND_REMOVE)
                         stopSelfResult(lastStartId)
